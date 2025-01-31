@@ -12,14 +12,18 @@ encoding_dict = {'age_grp': {'18-30':1, '31-50':2, '50+':3},
 
 model = joblib.load("./models/insurance-model.joblib")
 
+
 st.subheader("Fill the details below to get a prediction:")
 
-children = st.slider("Number of children", min_value=0, max_value=5, value=0, step=1)
-age = st.selectbox("Age group", options=list(encoding_dict['age_grp'].keys()))
-sex = st.radio("Gender", options=list(encoding_dict['sex'].keys()))
-smoker = st.radio("Is smoker?", options=list(encoding_dict['smoker'].keys()))
-region = st.selectbox("Region", options=list(encoding_dict['region'].keys()))
-bmi = st.number_input("BMI", min_value=15.0, max_value=55.0, value=20.0, step=0.5)
+col1, col2 = st.columns(2)
+
+
+age = col1.selectbox("Age group", options=list(encoding_dict['age_grp'].keys()))
+sex = col1.radio("Gender", options=list(encoding_dict['sex'].keys()))
+region = col2.selectbox("Region", options=list(encoding_dict['region'].keys()))
+smoker = col2.radio("Is smoker?", options=list(encoding_dict['smoker'].keys()))
+children = col1.slider("Number of children", min_value=0, max_value=5, value=0, step=1)
+bmi = col2.number_input("BMI", min_value=15.0, max_value=55.0, value=20.0, step=0.5)
 
 def model_pred(children, age, sex, smoker, region, bmi):
     
